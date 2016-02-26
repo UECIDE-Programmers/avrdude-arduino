@@ -1,0 +1,17 @@
+Source: avrdude-arduino
+Section: programmers
+XBSC-Family: avr
+Priority: extra
+Maintainer: Matt Jenkins <matt@majenko.co.uk>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+
+Package: avrdude-arduino
+Section: programmers
+Architecture: all
+XBSC-Group: AVR
+Description: Avrdude for STK500 (Arduino) boards
+ This is the default programmer for Arduino boards using the standard STK500V2 bootloader.
+
+
+

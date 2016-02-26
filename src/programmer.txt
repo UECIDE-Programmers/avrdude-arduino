@@ -1,0 +1,19 @@
+name=avrdude-arduino
+description=Avrdude for STK500 (Arduino) boards
+family=avr
+
+programmer.method=serial
+programmer.reset=dtr
+programmer.reset.dtr=yes
+programmer.reset.rts=yes
+
+programmer.command.freebsd=${programmer:root}/freebsd/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/freebsd/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.command.linux_arm=${programmer:root}/linux_pi/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/linux_pi/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.command.linux_amd64=${programmer:root}/linux64/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/linux64/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.command.linux_i386=${programmer:root}/linux32/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/linux32/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.command.macosx=${programmer:root}/macosx/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/macosx/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.command.windows=${programmer:root}/windows/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmerroot}/windows/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.verbose=-v
+programmer.quiet=-q::-q
+programmer.percent.character=#
+programmer.percent.multiply=2
