@@ -1,4 +1,4 @@
-name=avrdude-leonardo
+name=avrdude-arduino
 description=Avrdude for Arduino boards
 family=avr
 
