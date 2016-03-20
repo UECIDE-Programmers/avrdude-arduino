@@ -1,19 +1,27 @@
-name=avrdude-arduino
-description=Avrdude for STK500 (Arduino) boards
+name=avrdude-leonardo
+description=Avrdude for Arduino boards
 family=avr
 
-programmer.method=serial
-programmer.reset=dtr
-programmer.reset.dtr=yes
-programmer.reset.rts=yes
+board.reset.type=dtr
 
-programmer.command.freebsd=${programmer:root}/freebsd/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/freebsd/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
-programmer.command.linux_arm=${programmer:root}/linux_pi/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/linux_pi/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
-programmer.command.linux_amd64=${programmer:root}/linux64/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/linux64/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
-programmer.command.linux_i386=${programmer:root}/linux32/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/linux32/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
-programmer.command.macosx=${programmer:root}/macosx/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/macosx/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
-programmer.command.windows=${programmer:root}/windows/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmerroot}/windows/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
-programmer.verbose=-v
-programmer.quiet=-q::-q
-programmer.percent.character=#
-programmer.percent.multiply=2
+programmer.method=script
+programmer.script.0=__builtin_bullet::Resetting board...
+programmer.script.1=__builtin_exec::programmer.reset.${board.reset.type}.script
+programmer.script.2=__builtin_bullet::Uploading sketch...
+programmer.script.3.freebsd=${programmer:root}/freebsd/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/freebsd/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.script.3.linux_arm=${programmer:root}/linux_pi/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/linux_pi/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.script.3.linux_amd64=${programmer:root}/linux64/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/linux64/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.script.3.linux_i386=${programmer:root}/linux32/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/linux32/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.script.3.macosx=${programmer:root}/macosx/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/macosx/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.script.3.windows=${programmer:root}/windows/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmerroot}/windows/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${verbose}
+programmer.script.4=__builtin_bullet::All done.
+
+programmer.reset.baud.script.0=__builtin_port::open::1200
+programmer.reset.baud.script.1=__builtin_delay::100
+programmer.reset.baud.script.2=__builtin_port::close
+programmer.reset.baud.script.3=__builtin_delay::1500
+
+programmer.reset.dtr.script.0=__builtin_port::open::${upload.speed}
+programmer.reset.dtr.script.1=__builtin_port::pulse
+programmer.reset.dtr.script.2=__builtin_port::close
+
