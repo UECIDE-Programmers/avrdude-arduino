@@ -13,7 +13,7 @@ programmer.script.3.linux_arm=${programmer:root}/linux_pi/avrdude::${if:${board.
 programmer.script.3.linux_amd64=${programmer:root}/linux64/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/linux64/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${programmer.verbose.${prefs:programmers.avrdude.verbose}}
 programmer.script.3.linux_i386=${programmer:root}/linux32/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/linux32/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${programmer.verbose.${prefs:programmers.avrdude.verbose}}
 programmer.script.3.macosx=${programmer:root}/macosx/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/macosx/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${programmer.verbose.${prefs:programmers.avrdude.verbose}}
-programmer.script.3.windows=${programmer:root}/windows/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmerroot}/windows/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${programmer.verbose.${prefs:programmers.avrdude.verbose}}
+programmer.script.3.windows=${programmer:root}/windows/avrdude::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port}::-b${upload.speed}::-C${programmer:root}/windows/avrdude.conf::-c${upload.protocol}::-Uflash:w:${build.path}/${filename}.hex:i::${programmer.verbose.${prefs:programmers.avrdude.verbose}}
 programmer.script.4=__builtin_bullet::All done.
 
 programmer.reset.baud.script.0=__builtin_port::open::1200
