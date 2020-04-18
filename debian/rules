@@ -1,4 +1,62 @@
 #!/usr/bin/make -f
 
+JSON_URL := https://downloads.arduino.cc/packages/package_index.json
+AVR_VERSION := 6.3.0-arduino17
+
+DOWNLOADS = ../../downloads
+
 %:
-	dh $@
+	dh $@ 
+
+override_dh_builddeb:
+	dh_builddeb -- -Zgzip
+
+package_index.json:
+	wget -c $(JSON_URL)
+
+fetch_arm-linux-gnueabihf:
+	AVR_FILENAME=`../../tools/parseJson -i package_index.json -p arduino -h arm-linux-gnueabihf -T "avrdude" -v $(AVR_VERSION) -k archiveFileName` && \
+	AVR_URL=`../../tools/parseJson -i package_index.json -p arduino -h arm-linux-gnueabihf -T "avrdude" -v $(AVR_VERSION) -k url` && \
+	wget -c -O $(DOWNLOADS)/$${AVR_FILENAME} $${AVR_URL} && \
+	tar -jxf $(DOWNLOADS)/$${AVR_FILENAME} && \
+	rm -rf linux_arm && \
+	mv avrdude linux_arm
+
+fetch_i686-linux-gnu:
+	AVR_FILENAME=`../../tools/parseJson -i package_index.json -p arduino -h i686-linux-gnu -T "avrdude" -v $(AVR_VERSION) -k archiveFileName` && \
+	AVR_URL=`../../tools/parseJson -i package_index.json -p arduino -h i686-linux-gnu -T "avrdude" -v $(AVR_VERSION) -k url` && \
+	wget -c -O $(DOWNLOADS)/$${AVR_FILENAME} $${AVR_URL} && \
+	tar -jxf $(DOWNLOADS)/$${AVR_FILENAME} && \
+	rm -rf linux32 && \
+	mv avrdude linux32
+
+fetch_x86_64-linux-gnu:
+	AVR_FILENAME=`../../tools/parseJson -i package_index.json -p arduino -h x86_64-linux-gnu -T "avrdude" -v $(AVR_VERSION) -k archiveFileName` && \
+	AVR_URL=`../../tools/parseJson -i package_index.json -p arduino -h x86_64-linux-gnu -T "avrdude" -v $(AVR_VERSION) -k url` && \
+	wget -c -O $(DOWNLOADS)/$${AVR_FILENAME} $${AVR_URL} && \
+	tar -jxf $(DOWNLOADS)/$${AVR_FILENAME} && \
+	rm -rf linux64 && \
+	mv avrdude linux64
+
+fetch_x86_64-apple-darwin12:
+	AVR_FILENAME=`../../tools/parseJson -i package_index.json -p arduino -h x86_64-apple-darwin12 -T "avrdude" -v $(AVR_VERSION) -k archiveFileName` && \
+	AVR_URL=`../../tools/parseJson -i package_index.json -p arduino -h x86_64-apple-darwin12 -T "avrdude" -v $(AVR_VERSION) -k url` && \
+	wget -c -O $(DOWNLOADS)/$${AVR_FILENAME} $${AVR_URL} && \
+	tar -jxf $(DOWNLOADS)/$${AVR_FILENAME} && \
+	rm -rf macosx && \
+	mv avrdude macosx
+
+fetch_i686-mingw32:
+	AVR_FILENAME=`../../tools/parseJson -i package_index.json -p arduino -h i686-mingw32 -T "avrdude" -v $(AVR_VERSION) -k archiveFileName` && \
+	AVR_URL=`../../tools/parseJson -i package_index.json -p arduino -h i686-mingw32 -T "avrdude" -v $(AVR_VERSION) -k url` && \
+	wget -c -O $(DOWNLOADS)/$${AVR_FILENAME} $${AVR_URL} && \
+	unzip $(DOWNLOADS)/$${AVR_FILENAME} && \
+	rm -rf windows && \
+	mv avrdude windows
+
+
+
+override_dh_auto_build: package_index.json fetch_arm-linux-gnueabihf fetch_i686-linux-gnu fetch_x86_64-linux-gnu fetch_x86_64-apple-darwin12 fetch_i686-mingw32
+
+override_dh_auto_clean:
+	rm -rf package_index.json linux64 linux32 linux_arm macosx windows

@@ -1,7 +1,6 @@
-src/freebsd/ programmers/avrdude-arduino
-src/linux32/ programmers/avrdude-arduino
-src/linux64/ programmers/avrdude-arduino
-src/linux_pi/ programmers/avrdude-arduino
-src/macosx/ programmers/avrdude-arduino
-src/programmer.txt programmers/avrdude-arduino
-src/windows/ programmers/avrdude-arduino
+linux32 programmers/avrdude-arduino
+linux64 programmers/avrdude-arduino
+linux_arm programmers/avrdude-arduino
+macosx programmers/avrdude-arduino
+debian/programmer.txt programmers/avrdude-arduino
+windows programmers/avrdude-arduino
