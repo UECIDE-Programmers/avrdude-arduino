@@ -2,7 +2,7 @@ name=avrdude-arduino
 description=Avrdude for Arduino boards
 family=avr::megaavr
 
-pgm.opts=${if:x${upload.protocol}=xjtag2updi,-e,}::${if:${board.erase}=yes,,-D}::-V::-p${build.mcu}::-P${port.found}::-b${upload.speed}::-c${upload.protocol}::${programmer.verbose.${prefs:programmers.avrdude.verbose}}
+pgm.opts=${if:x${upload.protocol}=xjtag2updi,-e,-D}::-V::-p${build.mcu}::-P${port.found}::-b${upload.speed}::-c${upload.protocol}::${programmer.verbose.${prefs:programmers.avrdude.verbose}}
 
 programmer.method=script
 programmer.script.0=__builtin_bullet::Resetting board...
@@ -21,7 +21,7 @@ programmer.reset.jtag.script.0=__builtin_port::open::1200
 programmer.reset.jtag.script.1=__builtin_delay::100
 programmer.reset.jtag.script.2=__builtin_port::close
 programmer.reset.jtag.script.3=__builtin_delay::500
-programmer.reset.jtag.script.4=__builtin_set::port.found:${port}
+programmer.reset.jtag.script.4=__builtin_set::port.found::${port}
 
 programmer.reset.baud.script.0=__builtin_port::open::1200
 programmer.reset.baud.script.1=__builtin_delay::100
